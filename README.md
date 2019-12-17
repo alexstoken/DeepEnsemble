@@ -2,7 +2,7 @@
 Keras ensembles, made easy.
 
 ### Usage
-Build or load as many models as you'd like
+Build or load as many models as you'd like. Ensembles of different model architectures tend to perform better than ensembles of the same model architecture. 
 
 ```
 #inception
