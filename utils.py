@@ -2,6 +2,9 @@ import os
 import datetime
 import shutil
 import matplotlib.pyplot as plt
+import numpy as np
+import pathlib
+import matplotlib.image as image
 
 def save_model(model, history, dir_name, show_plots=True):
     """Save Keras model, model diagram, history, loss and accuracy plots all in one folder
@@ -173,3 +176,19 @@ def plot_history(history_list, metric: str, save_path=None, logo_path=None, show
         plt.show()
 
     return ax
+
+
+def move_dir(src: str, dst: str, pattern: str = '*'):
+    """Move an entire folder from one dir to another
+    
+    Arguments:
+        src {str} -- path to source (can be '.')
+        dst {str} -- path to destination (full or relative)
+    
+    Keyword Arguments:
+        pattern {str} -- uses fnmatch pattern matching (default: {'*'})
+    """
+    if not os.path.isdir(dst):
+        pathlib.Path(dst).mkdir(parents=True, exist_ok=True)
+    for f in fnmatch.filter(os.listdir(src), pattern):
+        shutil.move(os.path.join(src, f), os.path.join(dst, f))

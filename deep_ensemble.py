@@ -23,7 +23,7 @@ from tensorflow.keras import Model
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
-import ml_utils
+import utils
 from sklearn.metrics import roc_curve, roc_auc_score
 from scipy.optimize import differential_evolution
 import math
@@ -387,7 +387,7 @@ class DeepEnsemble(object):
 
         meta_hist = meta.fit(self.test_data, self.true_labels, epochs = 150, callbacks = callback_list, validation_split = .2)
 
-        ml_utils.save_model(meta, meta_hist, 'meta_equip')
+        utils.save_model(meta, meta_hist, 'meta_equip')
 
         return meta
 
@@ -467,7 +467,7 @@ class DeepEnsemble(object):
         return ax
 
     def plot_confusion(self, save_name=None, show=True):
-        """Wrapper for ml_utils plot_confusion_matrix function 
+        """Wrapper for utils plot_confusion_matrix function 
         
         Keyword Arguments:
             show {bool} -- print plot to screen (default: {False})
@@ -476,7 +476,7 @@ class DeepEnsemble(object):
         Returns:
             plt.ax -- ax object containing confusion matrix
         """
-        fig, ax = ml_utils.plot_confusion_matrix(self._confusion_matrix)
+        fig, ax = utils.plot_confusion_matrix(self._confusion_matrix)
         if show ==True:
             plt.show()
         if save_name:
