@@ -1,10 +1,17 @@
+#file handling
 import os
 import datetime
 import shutil
-import matplotlib.pyplot as plt
-import numpy as np
+import fnmatch
 import pathlib
+
+#plotting
 import matplotlib.image as image
+import matplotlib.pyplot as plt
+
+#ML utils
+from tensorflow.keras.utils import plot_model
+import numpy as np
 
 def save_model(model, history, dir_name, show_plots=True):
     """Save Keras model, model diagram, history, loss and accuracy plots all in one folder
