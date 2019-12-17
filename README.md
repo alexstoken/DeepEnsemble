@@ -2,7 +2,7 @@
 Keras ensembles, made easy.
 
 ### Usage
-Build or load as many models as you'd like
+Build or load as many models as you'd like. Ensembles of different model architectures tend to perform better than ensembles of the same model architecture. 
 
 ```
 #inception
@@ -56,12 +56,12 @@ d.plot_roc(show=True)
 ```
 Use two methods to find an weighted average of models that performs best on the validation set. You can use [differential evolution](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html) with `.find_weighted_avg()` or a meta-learner, a one layer neural network with the output of the sub-models (probability scores) as the input to the meta-learner. The meta-learner can be accessed with `.train_meta_learner()`. 
 
-
+```
 print('Finding weighted average')
 d.find_weighted_avg()
 print('Training meta-learner')
 d.train_meta_learner()
-
+```
 Finally, predict using the ensemble with
 ``` 
 d.predict(samples)
