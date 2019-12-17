@@ -20,8 +20,8 @@ model3 = models.load_model(
 
 Next, put them together in an ensemble
 ```
-equip_bin_ensemble = [equip_bin, equip_bin2, equip_bin5]
-d = DeepEnsemble(equip_bin_ensemble, pos_label=1)
+ensemble = [model1, model2, model3]
+d = DeepEnsemble(ensemble, pos_label=1)
 print(f'This is a {d.model_type} model.\n')
 ```
 
@@ -54,6 +54,9 @@ print(f'Model accuracy scores {d.acc_scores}')
 d.plot_confusion(show=True)
 d.plot_roc(show=True)
 ```
+![](https://github.com/alexstoken/DeepEnsemble/blob/master/images/confusion_matrix.png)
+![](https://github.com/alexstoken/DeepEnsemble/blob/master/images/roc_curve.png)
+
 Use two methods to find an weighted average of models that performs best on the validation set. You can use [differential evolution](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html) with `.find_weighted_avg()` or a meta-learner, a one layer neural network with the output of the sub-models (probability scores) as the input to the meta-learner. The meta-learner can be accessed with `.train_meta_learner()`. 
 
 ```
@@ -62,6 +65,16 @@ d.find_weighted_avg()
 print('Training meta-learner')
 d.train_meta_learner()
 ```
+Output:
+```
+Optimized Weights: [0.32454564 0.32321557 0.35223879]
+Optimized Weights Score: 0.98931
+{'model0': 0.96044895777659,
+ 'model1': 0.9428113308391235,
+ 'model2': 0.9583110636023516,
+ 'ensemble': 0.9887760555852485,
+ 'weighted_ensemble': 0.9893105291288081}
+ ```
 Finally, predict using the ensemble with
 ``` 
 d.predict(samples)
