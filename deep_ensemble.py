@@ -500,7 +500,11 @@ class DeepEnsemble(object):
         ax.set_xlabel('Recall')
         ax.set_ylabel('Precision')
         ax.set_title(f'Precision Recall Curve (AUC = {avg_precision:.4f})')
+        ax.grid(True, which='major', axis='both', linestyle='-')
+        ax.minorticks_on()
+        ax.grid(True, which='minor', axis='both', linestyle=':')
         ax.legend()
+            
 
         if show == True:
             plt.show()
@@ -527,7 +531,11 @@ class DeepEnsemble(object):
         ax.set_xlabel('Threshold')
         ax.set_ylabel(f'% of Dataset')
         ax.set_title(f'Precision/Recall at Thresholds')
+        ax.grid(True, which='major', axis='both', linestyle='-')
+        ax.minorticks_on()
+        ax.grid(True, which='minor', axis='both', linestyle=':')
         ax.legend()
+    
 
         if show == True:
             plt.show()
