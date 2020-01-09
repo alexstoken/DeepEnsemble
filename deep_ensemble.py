@@ -458,6 +458,11 @@ class DeepEnsemble(object):
         ax.plot(fpr[optimal_idx],tpr[optimal_idx] , color='black', marker = 'o', markersize = '5',
                 label=f'Optimal Threshold = {optimal_thresh:.4f}')
 
+        ax.grid(True, which='major', axis='both', linestyle='-')
+        ax.minorticks_on()
+        ax.grid(True, which='minor', axis='both', linestyle=':')
+        ax.legend()
+
         ax.legend()
         if show == True:
             plt.show()
