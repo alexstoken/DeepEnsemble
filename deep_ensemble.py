@@ -100,7 +100,6 @@ class DeepEnsemble(object):
     def _compute_regression_mse(self, preds, true_vals):
         pass
 
-
     def _compute_metrics(self):
         """Computes various helpful ML metrics for the ensemble model
 
@@ -368,7 +367,15 @@ class DeepEnsemble(object):
         return 1.0 - self._weighted_eval(preds, normalized)
 
     def train_meta_learner(self, val_data, val_labels):
-
+        """THIS METHOD IS CURRENTLY UNTESTED
+        
+        Arguments:
+            val_data {List} -- predicted labels from submodels
+            val_labels {List} -- ground truth labels
+        
+        Returns:
+            Keras.Model -- meta-learner model
+        """
         for i, m in enumerate(self.model_list):
             for layer in m.layers:
                 layer.trainable = False
@@ -494,6 +501,15 @@ class DeepEnsemble(object):
         return ax
 
     def plot_precision_recall(self, save_name = None, show = True ):
+        """Create precision recall curve for ensemble model
+        
+        Keyword Arguments:
+            save_name {str} -- file path/name WITH filetype to save plot
+            show {bool} -- print plot to screen (default: {True})
+        
+        Returns:
+            plt.ax -- ax object containing P-R curve
+        """
         from sklearn.metrics import precision_recall_curve, average_precision_score
 
         precision, recall, thresholds = precision_recall_curve(self.true_labels, self.ensemble_probas, pos_label=self.pos_label)
@@ -524,11 +540,14 @@ class DeepEnsemble(object):
         return ax
 
     def plot_threshold(self, save_name = None, show = True):
-        """[summary]
+        """Create threshold curve 
         
         Keyword Arguments:
-            save_name {[type]} -- [description] (default: {None})
-            show {bool} -- [description] (default: {True})
+            save_name {str} -- file path/name WITH filetype to save plot
+            show {bool} -- print plot to screen (default: {True})
+        
+        Returns:
+            plt.ax -- ax object containing threshold curve
         """
         from sklearn.metrics import precision_recall_curve
         precision, recall, thresholds = precision_recall_curve(self.true_labels, self.ensemble_probas, pos_label=self.pos_label)
