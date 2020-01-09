@@ -411,12 +411,12 @@ class DeepEnsemble(object):
         
         output_preds = np.array(output_preds)[:,:,0]
 
-        self.weighted_ensemble_probas = np.dot(self.weights, output_preds )
+        self.weighted_ensemble_preds = np.dot(self.weights, output_preds )
         self.weighted_class_preds = [
-            1 if p > self.thresh else 0 for p in self.weighted_ensemble_probas]
+            1 if p > self.thresh else 0 for p in self.weighted_ensemble_preds]
         
         if confidence == True:
-            return self.weighted_class_preds, self.weighted_ensemble_probas
+            return self.weighted_class_preds, self.weighted_ensemble_preds
         else: return self.weighted_class_preds
 
 
@@ -496,9 +496,9 @@ class DeepEnsemble(object):
     def plot_precision_recall(self, save_name = None, show = True ):
         from sklearn.metrics import precision_recall_curve, average_precision_score
 
-        precision, recall, thresholds = precision_recall_curve(self.true_labels, self.weighted_ensemble_probas, pos_label=self.pos_label)
+        precision, recall, thresholds = precision_recall_curve(self.true_labels, self.ensemble_probas, pos_label=self.pos_label)
 
-        avg_precision = average_precision_score(self.true_labels, self.weighted_ensemble_probas, pos_label= self.pos_label)
+        avg_precision = average_precision_score(self.true_labels, self.ensemble_probas, pos_label= self.pos_label)
 
         fig, ax = plt.subplots()
         ax.plot(recall, precision, label='Ensemble')
@@ -531,7 +531,7 @@ class DeepEnsemble(object):
             show {bool} -- [description] (default: {True})
         """
         from sklearn.metrics import precision_recall_curve
-        precision, recall, thresholds = precision_recall_curve(self.true_labels, self.weighted_ensemble_probas, pos_label=self.pos_label)
+        precision, recall, thresholds = precision_recall_curve(self.true_labels, self.ensemble_probas, pos_label=self.pos_label)
         
         fig, ax = plt.subplots()
         ax.plot(thresholds, precision, label='Precision')
