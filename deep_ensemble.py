@@ -6,7 +6,7 @@ Aug 1 2019
 Alex Stoken
 
 Updated:
-Aug 5 2019
+sDec 19 @019
 
 Class designed to make ensembles of keras models easy to train, test, and modify.
 
@@ -86,7 +86,6 @@ class DeepEnsemble(object):
         for p, true_label in zip(preds, true_labels):
             if p > self.thresh:
                 pred_label = 1
-
             else:
                 pred_label = 0
 
@@ -205,7 +204,7 @@ class DeepEnsemble(object):
         for i, model in enumerate(self.model_list):
             print(f'running model {i}')
             preds = model.predict(test_data)
-            self.preds_list.append(1 - preds)
+            self.preds_list.append(preds)
             self.acc_scores[f'model{i}'] = self._compute_accuracy(preds, test_labels)
 
         self.ensemble_probas = sum(self.preds_list) / len(self.preds_list)

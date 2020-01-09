@@ -56,7 +56,7 @@ def save_model(model, history, dir_name, show_plots=True):
     return 'models/' + new_dir + '/' + model_save_name
 
 
-def plot_history(history_list, metric: str, save_path=None, logo_path=None, show_plot=True):
+def plot_history(history_list, metric: str = 'all', save_path=None, logo_path=None, show_plot=True):
     """Plot the Model Loss for a Keras Classifier
     
     Arguments:
