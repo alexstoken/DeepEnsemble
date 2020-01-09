@@ -311,6 +311,12 @@ class DeepEnsemble(object):
         score = self._weighted_eval(weighted_data, self.weights)
         print('Optimized Weights Score: %.5f' % score)
 
+        #update ensemble probas to reflect weighed avg
+        #maintain unweighted probas in new list
+        self.unweighed_ensemble_probas = self.ensemble_probas[:]
+
+        self.ensemble_probas = np.dot(self.weights, np.array(self.preds_list)[:,:,0])
+
         return None
 
     def _weighted_eval(self, preds, weights):
@@ -547,6 +553,7 @@ class DeepEnsemble(object):
         if save_name:
             fig.savefig(save_name)
         return ax
+
 if (__name__ =='__main__'):
     #=================================================================
     # TEST AREA
