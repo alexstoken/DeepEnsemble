@@ -499,7 +499,7 @@ class DeepEnsemble(object):
         ax.set_ylim([0.0, 1.05])
         ax.set_xlabel('Recall')
         ax.set_ylabel('Precision')
-        ax.title(f'Precision Recall Curve (AUC = {avg_precision:.4f})')
+        ax.set_title(f'Precision Recall Curve (AUC = {avg_precision:.4f})')
         ax.legend()
 
         if show == True:
@@ -508,6 +508,32 @@ class DeepEnsemble(object):
             fig.savefig(save_name)
         return ax
 
+    def plot_threshold(self, save_name = None, show = True):
+        """[summary]
+        
+        Keyword Arguments:
+            save_name {[type]} -- [description] (default: {None})
+            show {bool} -- [description] (default: {True})
+        """
+        from sklearn.metrics import precision_recall_curve
+        precision, recall, thresholds = precision_recall_curve(self.true_labels, self.weighted_ensemble_probas, pos_label=self.pos_label)
+        
+        fig, ax = plt.subplots()
+        ax.plot(thresholds, precision, label='Precision')
+        ax.plot(thresholds, recall, label='Recall')
+
+        ax.set_xlim([0.0, 1.0])
+        ax.set_ylim([0.0, 1.05])
+        ax.set_xlabel('Threshold')
+        ax.set_ylabel(f'% of Dataset')
+        ax.set_title(f'Precision/Recall at Thresholds')
+        ax.legend()
+
+        if show == True:
+            plt.show()
+        if save_name:
+            fig.savefig(save_name)
+        return ax
 if (__name__ =='__main__'):
     #=================================================================
     # TEST AREA
